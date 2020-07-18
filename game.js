@@ -82,9 +82,11 @@ let j = 1;
 
 // start the game
 function startGame() {
-    $('h1#level-title').text("Press A Key to Start");
+    $('h1#level-title').text("Simon");
 
-    $(document).one("keypress", function() {
+    $("#btn-play").click(function() {
+
+        $("#btn-play").fadeOut();
 
         clearInterval(handler);
 

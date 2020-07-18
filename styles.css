@@ -8,6 +8,16 @@ body {
   margin: 0;
 }
 
+#level-title, #btn-play {
+  font-family: 'Press Start 2P', cursive;
+  color: #FEF2BF;
+}
+
+.container, #btn-play {
+  background-color: #011F3F;
+  box-shadow: -5px -5px 10px rgba(2, 47, 95, 0.5), 5px 5px 10px rgba(000,000,000, 0.5);
+}
+
 /* section logo */
 #game-intro, .container, #game-over {
   display: flex;
@@ -87,30 +97,24 @@ body {
 }
 
 #level-title {
-  font-family: 'Press Start 2P', cursive;
   font-size: 1.5rem;
-  margin: 8% 0;
-  color: #FEF2BF;
 }
 
 .container {
-  background-color: #011F3F;
-  height: 400px;
-  width: 400px;
-  margin: auto;
-  box-shadow: -15px -15px 20px rgba(2, 47, 95, 0.5), 
-              15px 15px 20px rgba(000,000,000, 0.5);
+  height: 300px;
+  width: 300px;
+  margin: 20px auto 30px;
   border-radius: 50%;
 }
 
 .simon-board {
-  margin: 1% auto 0;
+  margin: 1.5% auto 0;
 }
 
 .btn {
   display: inline-block;
-  height: 190px;
-  width: 190px;
+  height: 140px;
+  width: 140px;
 }
 
 .game-over {
@@ -161,6 +165,19 @@ body {
 }
 /* ----------------- */
 
+/* play button */
+#btn-play {
+  font-size: 0.8rem;
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: unset;
+}
+/* ---------------- */
+
+#btn-play:hover, .btn:hover {
+  cursor: pointer;
+}
+
 
 /* responsive web app */
 
@@ -168,7 +185,6 @@ body {
 @media screen and (max-width: 780px) {
   #level-title {
     font-size: 1.2rem;
-    margin: 30px 0;
   }
 
   .container {
@@ -192,7 +208,6 @@ body {
 
   #level-title {
     font-size: 1rem;
-    margin: 20px 0;
   }
 
   .container {
