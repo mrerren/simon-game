@@ -1,0 +1,210 @@
+html, body {
+  overflow: hidden;
+}
+
+body {
+  text-align: center;
+  background-color: #011F3F;
+  margin: 0;
+}
+
+/* section logo */
+#game-intro, .container, #game-over {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+#logo {
+  animation: fill-anim 0.5s ease forwards 4s;
+}
+
+#logo path:nth-child(1) {
+  stroke-dasharray: 494;
+  stroke-dashoffset: 494;
+  animation: line-anim 2s ease forwards;
+  animation-delay: 2s;
+}
+
+#logo path:nth-child(2) {
+  stroke-dasharray: 227;
+  stroke-dashoffset: 227;
+  animation: line-anim 2s ease forwards 0.3s;
+  animation-delay: 2s;
+}
+
+#logo path:nth-child(3) {
+  stroke-dasharray: 755;
+  stroke-dashoffset: 755;
+  animation: line-anim 2s ease forwards 0.6s;
+  animation-delay: 2s;
+}
+
+#logo path:nth-child(4) {
+  stroke-dasharray: 566;
+  stroke-dashoffset: 566;
+  animation: line-anim 2s ease forwards 0.9s;
+  animation-delay: 2s;
+}
+
+#logo path:nth-child(5) {
+  stroke-dasharray: 604;
+  stroke-dashoffset: 604;
+  animation: line-anim 2s ease forwards 1.2s;
+  animation-delay: 2s;
+}
+
+@keyframes line-anim {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fill-anim {
+  from {
+    fill: transparent;
+  }
+
+  to {
+    fill: white;
+  }
+}
+
+@keyframes scale-anim {
+  to {
+    fill: white;
+    transform: scale(100);
+  }
+}
+/* end of section logo */
+
+#simon-game {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+}
+
+#level-title {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 3rem;
+  margin: 8% 0;
+  color: #FEF2BF;
+}
+
+.container {
+  background-color: #011F3F;
+  height: 800px;
+  width: 800px;
+  margin: auto;
+  box-shadow: -15px -15px 20px rgba(2, 47, 95, 0.5), 
+              15px 15px 20px rgba(000,000,000, 0.5);
+  border-radius: 50%;
+}
+
+.btn {
+  display: inline-block;
+  height: 390px;
+  width: 390px;
+}
+
+.game-over {
+  background-color: red;
+  opacity: 0.8;
+}
+
+.red {
+  background-color: red;
+  border-radius: 0 600px 0 0;
+}
+
+.green {
+  background-color: green;
+  border-radius: 600px 0 0 0;
+}
+
+.blue {
+  background-color: blue;
+  border-radius: 0 0 600px 0;
+}
+
+.yellow {
+  background-color: yellow;
+  border-radius: 0 0 0 600px;
+}
+
+.pressed {
+  box-shadow: 0 0 20px white;
+  background-color: grey;
+}
+
+.fade {
+  opacity: 0.2;
+}
+
+
+/* game over section */
+#game-over {
+  background-image: url("images/game-over--background.svg");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.logo-game-over {
+  width: 50%;
+}
+/* ----------------- */
+
+
+/* responsive web app */
+
+/* tablet devices  */
+@media screen and (max-width: 780px) {
+  #level-title {
+    font-size: 1.2rem;
+    margin: 30px 0;
+  }
+
+  .container {
+    height: 250px !important;
+    width: 250px;
+    padding: 3px 0 0;
+  }
+
+  .btn {
+    height: 120px;
+    width: 120px;
+  }
+}
+
+/* mobile devices */
+
+@media screen and (max-width: 460px) {
+  #logo {
+    width: 50%;
+  }
+
+  #level-title {
+    font-size: 1rem;
+    margin: 20px 0;
+  }
+
+  .container {
+    height: 200px !important;
+    width: 200px;
+    padding: 2px 0 0;
+  }
+
+  .btn {
+    height: 95px;
+    width: 95px;
+  }
+
+  #game-over .logo-game-over {
+    width: 80%;
+  }
+}
+
+/* ---------- */
