@@ -1,4 +1,3 @@
-
 // <><><><><> ANIMATIONS AND EFFECT <><><><><>
 
 // preset sound effect
@@ -8,48 +7,71 @@ var gamePlaySound = new Audio("sounds/sound-effect/game-play.mp3");
 
 var startGameSound = new Audio("sounds/sound-effect/start-game-new.mp3");
 
+var mouseClick = new Audio("sounds/sound-effect/mouse-click-new.mp3");
+
 var gameOverSound = new Audio("sounds/wrong.mp3");
 // ---------------
 
-// sound effect 
-setTimeout(function() {
-    logoIntroSound.play();
-}, 1500);
+// fading sound effect
+// ## game play
+function gamePS_fading() {
+    var fadePoint = gamePlaySound.currentTime + 2;
 
-// looping game play sound effect
-setTimeout(function() {
-    setInterval(function() {
-        gamePlaySound.play(); 
-    });
-},11500);
-// --------------------
-
-// fadding animation 
-setTimeout(function() {
-    $("#game-intro").css("animation", "scale-anim 30s ease forwards 1s");
-}, 3500);
-
-setTimeout(function() {
-    $("#game-intro").fadeOut(1000);
-
-    $("#simon-game").fadeIn(4000);
-}, 10000);
-
-function eventHandler(i) {
-    $(`#${buttonColor[i]}`).addClass("fade");
-    setTimeout(function() {
-        $(`#${buttonColor[i]}`).removeClass("fade");
-    }, 100 * i);   
-
+    var fadeAudio = setInterval(function () {
+        // Only fade if past the fade out point or not at zero already
+        if ((gamePlaySound.currentTime >= fadePoint) && (gamePlaySound.volume != 0.0)) {
+            gamePlaySound.volume -= 0.1;
+        }
+        // When volume at zero stop all the intervalling
+        if (gamePlaySound.volume <= 0.1) {
+            clearInterval(fadeAudio);
+        }
+    }, 200);
 }
 
-var handler = setInterval(function() {
-    for(let i = 0; i <= buttonColor.length; i++) {
-        eventHandler(i);
-    }
-}, 1000);
+// -------------------
 
-// ---------------
+// looping sound effect
+// ## game play
+var gamePS_looping;
+
+function gamePS_interval() {
+    gamePS_looping = setInterval(function() {
+        gamePlaySound.play(); 
+    });
+}
+
+// stop looping game play sound effect
+function gamePS_clearLooping() {
+    clearInterval(gamePS_looping);
+    
+    gamePS_fading();
+}
+// --------------
+
+// intro game effect
+function gameIntro() {
+    // sound effect 
+    setTimeout(function() {
+        logoIntroSound.play();
+    }, 1500);
+
+    // looping game play sound effect
+     setTimeout(gamePS_interval, 11500);
+    // --------------------
+
+    // fading animation 
+    setTimeout(function() {
+        $("#logo-intro").css("animation", "scale-anim 30s ease forwards 1s");
+    }, 3500);
+
+    setTimeout(function() {
+        $("#logo-intro").fadeOut(1000);
+
+        $("#simon-game").fadeIn(4000);
+    }, 10000);
+}
+// -------------------
 
 // sound and animation
 function playSound(playOn) {
@@ -66,6 +88,22 @@ function animatePress(pressOn) {
 }
 // ------------------
 
+// handler interval button game play fading effect
+function eventHandler(i) {
+    $(`#${buttonColor[i]}`).addClass("fade");
+    setTimeout(function() {
+        $(`#${buttonColor[i]}`).removeClass("fade");
+    }, 100 * i);   
+
+}
+
+var handler = setInterval(function() {
+    for(let i = 0; i <= buttonColor.length; i++) {
+        eventHandler(i);
+    }
+}, 1000);
+// ---------------
+
 // <><><><><><><><><><><><><><><><><><><><><><><><><>
 
 
@@ -80,13 +118,30 @@ const buttonColor = ["red", "blue", "green", "yellow"];
 
 let j = 1;
 
+// power button
+$("#logo-intro").hide();
+$("#power-button").click(function() {
+    // activate effect
+    mouseClick.play();
+
+    $("#power-button").fadeOut(1500);
+
+    $("#logo-intro").fadeIn(2000);
+
+    // activate function
+    gameIntro();
+
+    startGame();
+});
+// --------------
+
 // start the game
 function startGame() {
     $('h1#level-title').text("Simon");
 
-    $("#btn-play").click(function() {
+    $("#play-button").click(function() {
 
-        $("#btn-play").fadeOut();
+        $("#play-button").fadeOut();
 
         clearInterval(handler);
 
@@ -98,8 +153,6 @@ function startGame() {
 
     });
 }
-
-startGame();
 
 function nextSequence() {
 
@@ -116,16 +169,30 @@ function levelUp() {
     
     gamePattern.splice(0, gamePattern.length);
     userClickedPattern.splice(0, userClickedPattern.length);
-    
     for(let i = 1; i <= j; i++) {
         $('h1#level-title').text(`Level ${i}`);
         compTurn(i);
+        console.log("computer turn");
+
+        if ( i == j) {
+            setTimeout(function() {
+                console.log("player turn");
+                for(let i = 0; i < buttonColor.length; i++) {
+                    $(`#${buttonColor[i]}`).prop("disabled", false);
+                }
+            }, (1000 * i) + 1000);
+        }
+
     } j++;
 }
 // -----------------
 
 // computer turn
 function compTurn(i) {
+    
+    for(let i = 0; i < buttonColor.length; i++) {
+        $(`#${buttonColor[i]}`).prop("disabled", true);
+    }
 
     setTimeout(function() { 
 
@@ -151,6 +218,7 @@ function compTurn(i) {
 function palyerTurn() {
 
     $("#green").click(function(event) {
+
         let userChosenColor = event.target.id;
         userClickedPattern.push(userChosenColor);
 
@@ -162,6 +230,7 @@ function palyerTurn() {
     })
 
     $("#red").click(function(event) {
+
         let userChosenColor = event.target.id;
         userClickedPattern.push(userChosenColor);
 
@@ -173,6 +242,7 @@ function palyerTurn() {
     });
 
     $("#yellow").click(function(event) {
+
         let userChosenColor = event.target.id;
         userClickedPattern.push(userChosenColor);
 
@@ -184,6 +254,7 @@ function palyerTurn() {
     });
     
     $("#blue").click(function(event) {
+
         let userChosenColor = event.target.id;
         userClickedPattern.push(userChosenColor);
 
@@ -235,6 +306,9 @@ function resultAnswer(player, comp) {
 
 // game over
 function gameOver() {
+    
+    gamePS_clearLooping();
+
     $("body").addClass("game-over");
     gameOverSound.play();
 
@@ -244,7 +318,7 @@ function gameOver() {
         $("#simon-game").hide();
     }, 250);
 
-    //reload the game
+    // reload the game
     setTimeout(function() {
         location.reload(true);
     }, 5000);
